@@ -1,1 +1,1 @@
-# supermarket_billing_system
+supermaket billing system is a console based project in c++
