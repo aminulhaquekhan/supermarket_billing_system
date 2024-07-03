@@ -1,5 +1,6 @@
-#include <bits/stdc++.h>
-#include <fstream>
+#include<bits/stdc++.h>
+#include<fstream>
+#include<unordered_map>
 
 using namespace std;
 
@@ -39,6 +40,21 @@ bool adminLogin() {
         cout << "Login failed. Invalid username or password.\n";
         return false;
     }
+}
+
+unordered_map<string, string> readUserData(const string& filename) {
+    unordered_map<string, string> um;
+    fstream infile(filename, ios::in);
+    string username, password;
+    if (infile.is_open()) {
+        while (infile >> username >> password) {
+            um[username] = password;
+        }
+        infile.close();
+    } else {
+        cout << "Error opening file for reading!" << endl;
+    }
+    return um;
 }
 
 void addItem() {
@@ -156,3 +172,7 @@ int main() {
 }
 
 
+
+
+    
+       
