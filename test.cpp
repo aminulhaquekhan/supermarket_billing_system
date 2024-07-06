@@ -8,6 +8,8 @@ void showMenu();
 void addItem();
 void displayItems();
 void generateBill();
+void updateItem();
+void deleteItem();
 bool adminLogin();
 
 struct Item {
@@ -22,7 +24,9 @@ void showMenu() {
     cout << "1. Add Item\n";
     cout << "2. Display Items\n";
     cout << "3. Generate Bill\n";
-    cout << "4. Exit\n";
+    cout << "4. Update Item\n";
+    cout << "5. Delete Item\n";
+    cout << "6. Exit\n";
     cout << "======================================\n";
 }
 
@@ -134,6 +138,125 @@ void generateBill() {
     cout << "\t\t\t\tTotal Bill: " << totalBill << endl;
     cout << "=============================================\n";
     inFile.close();
+
+    cout << "\nChoose Payment Method:\n";
+    cout << "1. Cash\n";
+    cout << "2. Credit Card\n";
+    cout << "3. Mobile Payment\n";
+    int paymentChoice;
+    cout << "Enter your choice: ";
+    cin >> paymentChoice;
+
+    switch (paymentChoice) {
+        case 1:
+            cout << "Payment successful. Thank you for paying by cash.\n";
+            break;
+        case 2: {
+            string cardNumber, expiryDate, cvv;
+            cout << "Enter Credit Card Number: ";
+            cin >> cardNumber;
+            cout << "Enter Expiry Date (MM/YY): ";
+            cin >> expiryDate;
+            cout << "Enter CVV: ";
+            cin >> cvv;
+            cout << "Payment successful. Thank you for paying by credit card.\n";
+            break;
+        }
+        case 3: {
+            string mobileNumber, otp;
+            cout << "Enter Mobile Number: ";
+            cin >> mobileNumber;
+            cout << "Enter OTP: ";
+            cin >> otp;
+            cout << "Payment successful. Thank you for paying via mobile payment.\n";
+            break;
+        }
+        default:
+            cout << "Invalid payment method chosen. Transaction canceled.\n";
+            break;
+    }
+}
+
+void updateItem() {
+    cout << "\nEnter item code to update: ";
+    int code;
+    cin >> code;
+
+    ifstream inFile("items.txt");
+    ofstream outFile("temp.txt");
+    if (!inFile || !outFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    Item item;
+    bool found = false;
+    char comma;
+    while (inFile >> item.itemCode >> comma >> ws &&
+           getline(inFile, item.itemName, ',') &&
+           inFile >> item.itemPrice >> comma >> item.quantity) {
+        if (item.itemCode == code) {
+            found = true;
+            cout << "\nEnter new item name: ";
+            cin.ignore();
+            getline(cin, item.itemName);
+            cout << "Enter new item price: ";
+            cin >> item.itemPrice;
+            cout << "Enter new quantity: ";
+            cin >> item.quantity;
+            cout << "\nItem updated successfully!\n";
+        }
+        outFile << item.itemCode << "," << item.itemName << ","
+                << item.itemPrice << "," << item.quantity << endl;
+    }
+
+    inFile.close();
+    outFile.close();
+
+    if (!found) {
+        cout << "Item not found.\n";
+    } else {
+        remove("items.txt");
+        rename("temp.txt", "items.txt");
+    }
+}
+
+void deleteItem() {
+    cout << "\nEnter item code to delete: ";
+    int code;
+    cin >> code;
+
+    ifstream inFile("items.txt");
+    ofstream outFile("temp.txt");
+    if (!inFile || !outFile) {
+        cout << "Error opening file." << endl;
+        return;
+    }
+
+    Item item;
+    bool found = false;
+    char comma;
+    while (inFile >> item.itemCode >> comma >> ws &&
+           getline(inFile, item.itemName, ',') &&
+           inFile >> item.itemPrice >> comma >> item.quantity) {
+        if (item.itemCode == code) {
+            found = true;
+            cout << "\nItem deleted successfully!\n";
+            continue;
+        }
+        outFile << item.itemCode << "," << item.itemName << ","
+                << item.itemPrice << "," << item.quantity << endl;
+    }
+
+    inFile.close();
+    outFile.close();
+
+    if (!found) {
+        cout << "Item not found.\n";
+    } else {
+        remove("items.txt");
+        rename("temp.txt", "items.txt");
+    }
 }
 
 int main() {
@@ -160,19 +283,32 @@ int main() {
                 generateBill();
                 break;
             case 4:
+                updateItem();
+                break;
+            case 5:
+                deleteItem();
+                break;
+            case 6:
                 cout << "Exiting program...\n";
                 break;
             default:
                 cout << "Invalid choice. Please enter a valid option.\n";
                 break;
         }
-    } while (choice != 4);
+    } while (choice != 6);
 
     return 0;
 }
 
 
+   
+ 
+
+   
 
 
+    
+  
+   
     
        
