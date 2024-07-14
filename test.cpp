@@ -1,6 +1,8 @@
-#include<bits/stdc++.h>
-#include<fstream>
-#include<unordered_map>
+#include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <iomanip>
+#include <conio.h>
 
 using namespace std;
 
@@ -34,14 +36,25 @@ bool adminLogin() {
     string username, password;
     cout << "Enter admin username: ";
     cin >> username;
-    cout << "Enter admin password: ";
-    cin >> password;
 
-    if (username == "aminul" && password == "55999") {
+    cout << "Enter admin password: ";
+    char ch;
+    while ((ch = _getch()) != '\r') {
+        if (ch == '\b' && !password.empty()) {
+            cout << "\b \b";
+            password.pop_back();
+        } else if (ch != '\b') {
+            cout << '*';
+            password += ch;
+        }
+    }
+    cout << endl;
+
+    if (password == "55999") {
         cout << "Login successful.\n";
         return true;
     } else {
-        cout << "Login failed. Invalid username or password.\n";
+        cout << "Login failed. Invalid password.\n";
         return false;
     }
 }
@@ -300,9 +313,6 @@ int main() {
     return 0;
 }
 
-
-   
- 
 
    
 
