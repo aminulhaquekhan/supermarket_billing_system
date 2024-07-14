@@ -1,7 +1,6 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <fstream>
 #include <unordered_map>
-#include <iomanip>
 #include <conio.h>
 
 using namespace std;
@@ -313,8 +312,6 @@ int main() {
     return 0;
 }
 
-
-   
 
 
     
