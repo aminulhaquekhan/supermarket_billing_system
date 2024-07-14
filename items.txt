@@ -1,0 +1,10 @@
+1,pasta,350,2
+2,burger,450,3
+3,pizza,450,3
+4,noodles,350,2
+5,biscuits,250,2
+6,cheesecake,350,2
+7,bread,150,1
+8,toast,150,3
+9,pancake,150,1
+10,chocolate,450,3
